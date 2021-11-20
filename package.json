@@ -24,7 +24,9 @@
     "build": "next build",
     "dev": "next dev",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
-    "build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css"
+    "build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css",
+    "lint": "eslint . --cache --fix",
+    "pretest": "npm run lint"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,6 +48,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
+    "eslint": "^8.2.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "postcss": "^8.3.11",
     "prop-types": "^15.7.2"
   }
