@@ -8,11 +8,11 @@ import { useRouter } from "next/router";
 export default function Index() {
   const router = useRouter();
   const { login, error, ...rest } = useStore();
-  const enbaledRemeberMe = rest.host || rest.key;
+  const enabledRememberMe = rest.host || rest.key;
   const [host, setHost] = useState(rest.host);
   const [key, setKey] = useState(rest.key);
-  const [remember, setRemember] = useState(enbaledRemeberMe);
-  console.log(rest);
+  const [remember, setRemember] = useState(enabledRememberMe);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     await login(host, key, remember);
@@ -23,6 +23,7 @@ export default function Index() {
       router.push("/admin/dashboard");
     }
   }, [rest.host, rest.key, rest.keys]);
+
   return (
     <>
       <div className="container mx-auto px-4 h-full">

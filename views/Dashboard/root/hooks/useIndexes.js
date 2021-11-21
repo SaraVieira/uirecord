@@ -14,5 +14,5 @@ export const useIndexes = () => {
     keys: { private: privateKey },
     host,
   } = useStore();
-  return useQuery(["indexes"], () => getIndexes(host, privateKey));
+  return useQuery("indexes", () => getIndexes(host, privateKey));
 };

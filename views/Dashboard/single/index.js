@@ -1,13 +1,11 @@
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  SearchCircleIcon,
-} from "@heroicons/react/outline";
+import { SearchCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useMemo, useState } from "react";
 import Admin from "../../../layouts/Admin";
+import { openModal } from "../../../lib/modals/wrapper";
 import { PAGE_SIZE } from "./constants";
 import { useIndex } from "./hooks/useIndex";
+import Pagination from "./Pagination";
 import Tabs from "./Tabs";
 
 const Index = () => {
@@ -23,23 +21,31 @@ const Index = () => {
     () => Math.ceil(data?.nbHits / PAGE_SIZE),
     [documents]
   );
-  console.log(availablePages);
+
   useEffect(() => {
     if (documents?.length) {
       setKeys(Object.keys(documents[0]));
     }
   }, [documents]);
 
-  const arrayOfPages =
-    availablePages && Array.apply(null, Array(availablePages)).map((_, i) => i);
-
-  const getActiveClassName = (active) =>
-    active
-      ? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-      : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium";
-
   return (
     <>
+      <div className="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+            {uid}
+          </h1>
+        </div>
+        <div className="mt-4 flex sm:mt-0 sm:ml-4">
+          <button
+            type="button"
+            className="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3"
+            onClick={() => openModal({ name: "new-index" })}
+          >
+            Create a new Index
+          </button>
+        </div>
+      </div>
       <Tabs />
 
       <div className="flex flex-col items-end">
@@ -96,7 +102,7 @@ const Index = () => {
                         >
                           {Object.values(document).map((value) => (
                             <td
-                              key={documentIdx}
+                              key={value}
                               className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500"
                             >
                               {value}
@@ -106,101 +112,12 @@ const Index = () => {
                       ))}
                   </tbody>
                 </table>
-                {availablePages && (
-                  <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-                    <div className="flex-1 flex justify-between sm:hidden">
-                      <a
-                        href="#"
-                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                      >
-                        Previous
-                      </a>
-                      <a
-                        href="#"
-                        className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                      >
-                        Next
-                      </a>
-                    </div>
-                    <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                      <div>
-                        <p className="text-sm text-gray-700">
-                          Showing{" "}
-                          <span className="font-medium">
-                            {(page - 1) * PAGE_SIZE || 1}
-                          </span>{" "}
-                          to{" "}
-                          <span className="font-medium">
-                            {page * PAGE_SIZE > data.nbHits
-                              ? data.nbHits
-                              : page * PAGE_SIZE}
-                          </span>{" "}
-                          of <span className="font-medium">{data.nbHits}</span>{" "}
-                          results
-                        </p>
-                      </div>
-                      <div>
-                        <nav
-                          className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-                          aria-label="Pagination"
-                        >
-                          {page !== 1 && (
-                            <button
-                              onClick={() => setPage(page - 1)}
-                              className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                            >
-                              <span className="sr-only">Previous</span>
-                              <ChevronLeftIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          )}
-                          {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
-                          {arrayOfPages.slice(0, 3).length &&
-                            arrayOfPages.slice(0, 3).map((i) => (
-                              <button
-                                key={i}
-                                onClick={() => setPage(i + 1)}
-                                className={getActiveClassName(i + 1 === page)}
-                              >
-                                {i + 1}
-                              </button>
-                            ))}
-
-                          {availablePages > 6 && (
-                            <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                              ...
-                            </span>
-                          )}
-                          {availablePages > 3 &&
-                            arrayOfPages.slice(-3).map((i) => (
-                              <button
-                                key={i}
-                                onClick={() => setPage(i + 1)}
-                                aria-current="page"
-                                className={getActiveClassName(i + 1 === page)}
-                              >
-                                {i + 1}
-                              </button>
-                            ))}
-                          {page !== availablePages && (
-                            <button
-                              onClick={() => setPage(page + 1)}
-                              className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                            >
-                              <span className="sr-only">Next</span>
-                              <ChevronRightIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          )}
-                        </nav>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <Pagination
+                  page={page}
+                  setPage={setPage}
+                  availablePages={availablePages}
+                  hits={data?.nbHits}
+                />
               </div>
             </div>
           </div>

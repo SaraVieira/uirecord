@@ -8,10 +8,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "tailwindcss/tailwind.css";
-
+import ModalWrapper from "../lib/modals/wrapper";
+const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {
   const createStore = useCreateStore(pageProps.initialZustandState);
-  const queryClient = new QueryClient();
+
   const Layout = Component.layout || (({ children }) => <>{children}</>);
 
   return (
@@ -27,7 +28,8 @@ export default function App({ Component, pageProps }) {
         <Provider createStore={createStore}>
           <Layout>
             <Component {...pageProps} />
-            <ReactQueryDevtools initialIsOpen={false} />
+            <ModalWrapper />
+            <ReactQueryDevtools initialIsOpen={true} />
           </Layout>
         </Provider>
       </QueryClientProvider>
