@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import Auth from "layouts/Auth.js";
-import { useStore } from "lib/store";
-import FeedbackMessage from "components/FeedbackMessage";
+import Auth from "../layouts/Auth.js";
+import { useStore } from "../lib/store";
+import FeedbackMessage from "../components/FeedbackMessage";
 import { useRouter } from "next/router";
 
 export default function Index() {
