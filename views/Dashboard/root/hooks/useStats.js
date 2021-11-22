@@ -1,18 +1,17 @@
-import { useStore } from "../../../../lib/store";
+
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useInfo } from "../../../../lib/hooks/useInfo";
+import { STATS } from "../../../../lib/constants";
 
-const getStats = async (host, privateKey) => {
+const getStats = async (host, headers) => {
   const { data } = await axios.get(`${host}/stats`, {
-    headers: { "X-Meili-API-Key": privateKey },
+    headers,
   });
   return data;
 };
 
 export const useStats = () => {
-  const {
-    keys: { private: privateKey },
-    host,
-  } = useStore();
-  return useQuery(["stats"], () => getStats(host, privateKey));
+  const { host, headers } = useInfo();
+  return useQuery(STATS, () => getStats(host, headers));
 };

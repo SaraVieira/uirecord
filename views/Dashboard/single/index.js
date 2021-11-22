@@ -2,6 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import Button from "../../../components/Button";
 
 import Admin from "../../../layouts/Admin";
+import { INDEX_TABS } from "../../../lib/constants";
 import { openModal } from "../../../lib/modals/wrapper";
 import Documents from "./Documents";
 import Settings from "./Settings";
@@ -30,8 +31,8 @@ const Index = () => {
         </div>
       </div>
       <Tabs uid={uid} tab={tab} />
-      {(tab === "documents" || !tab) && <Documents />}
-      {(tab === "settings") && <Settings />}
+      {(tab === INDEX_TABS[0] || !tab) && <Documents />}
+      {(tab === INDEX_TABS[1]) && <Settings />}
     </>
   );
 };

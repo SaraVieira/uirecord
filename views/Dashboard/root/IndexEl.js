@@ -2,6 +2,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { classNames } from "../../../lib/utils/classnames";
 import { ChevronRightIcon } from "@heroicons/react/solid";
+import { SINGLE_INDEX } from "../../../lib/constants";
 
 export const IndexElDesktop = ({ index }) => (
   <tr>
@@ -14,7 +15,7 @@ export const IndexElDesktop = ({ index }) => (
           )}
           aria-hidden="true"
         />
-        <Link href={`/admin/dashboard/index/${index.uid}`}>
+        <Link href={SINGLE_INDEX(index.uid)}>
           <a className="truncate hover:text-gray-600">
             <span>{index.name} </span>
           </a>
@@ -35,7 +36,7 @@ export const IndexElDesktop = ({ index }) => (
 
 export const IndexElMobile = ({ index }) => (
   <li>
-    <Link href={`/admin/dashboard/index/${index.uid}`}>
+    <Link href={SINGLE_INDEX(index.uid)}>
       <a className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6">
         <span className="flex items-center truncate space-x-3">
           <span className="font-medium truncate text-sm leading-6">

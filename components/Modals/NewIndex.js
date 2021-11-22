@@ -3,6 +3,7 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useMutation, useQueryClient } from "react-query";
+import { INDEXES } from "../../lib/constants";
 import { useInfo } from "../../lib/hooks/useInfo";
 import { closeModal } from "../../lib/modals/wrapper";
 
@@ -23,7 +24,7 @@ const useCreateIndex = () => {
     },
     {
       onSuccess: async () => {
-        await queryClient.invalidateQueries("indexes");
+        await queryClient.invalidateQueries(INDEXES);
         closeModal();
       },
     }

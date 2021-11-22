@@ -3,6 +3,7 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";
+import { DASHBOARD_ROUTE, INDEXES } from "../../lib/constants";
 import { useInfo } from "../../lib/hooks/useInfo";
 import Button from "../Button";
 
@@ -18,8 +19,8 @@ const useCreateIndex = () => {
     },
     {
       onSuccess: async () => {
-        await queryClient.invalidateQueries("indexes");
-        router.push("/admin/dashboard");
+        await queryClient.invalidateQueries(INDEXES);
+        router.push(DASHBOARD_ROUTE);
       },
     }
   );

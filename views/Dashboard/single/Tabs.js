@@ -1,18 +1,19 @@
 import { classNames } from "../../../lib/utils/classnames";
 import Link from "next/link";
+import { INDEX_TABS, SINGLE_INDEX } from "../../../lib/constants";
 
 export default function Tabs({ uid, tab }) {
-  const link = `/admin/dashboard/index/${uid}`;
+  const link = SINGLE_INDEX(uid);
   const tabs = [
     {
       name: "Documents",
-      href: `${link}?tab=documents`,
-      current: !tab || tab === "documents",
+      href: `${link}?tab=${INDEX_TABS[0]}`,
+      current: !tab || tab === INDEX_TABS[0],
     },
     {
       name: "Settings",
-      href: `${link}?tab=settings`,
-      current: tab === "settings",
+      href: `${link}?tab=${INDEX_TABS[1]}`,
+      current: tab === INDEX_TABS[1],
     },
   ];
 
