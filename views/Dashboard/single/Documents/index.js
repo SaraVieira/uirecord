@@ -1,6 +1,8 @@
-import { SearchCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import Button from "../../../../components/Button";
+import { Input } from "../../../../components/Input";
+import { openModal } from "../../../../lib/modals/wrapper";
 import { PAGE_SIZE } from "../constants";
 import { useIndex } from "../hooks/useIndex";
 import Pagination from "../Pagination";
@@ -30,32 +32,24 @@ const Documents = () => {
     }
   }, [documents]);
   return (
-    <div className="flex flex-col items-end">
-      <div style={{ width: 400 }} className="flex-grow m-2">
-        <label
-          htmlFor="search"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Search
-        </label>
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <input
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between px-5 mb-5">
+        <div style={{ width: 400 }}>
+          <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            hiddenLabel
+            placeholder="Search"
             type="search"
             name="search"
             id="search"
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md"
+            label="search"
           />
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <SearchCircleIcon
-              className="h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
-          </div>
         </div>
+        <Button onClick={() => openModal({ name: "add-records" })}>
+          Add Documents
+        </Button>
       </div>
-
       <div className="flex flex-col w-full">
         {documents && !documents.length && <Empty />}
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -74,6 +68,12 @@ const Documents = () => {
                           {key}
                         </th>
                       ))}
+                    <th
+                      scope="col"
+                      className="sr-only px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,6 +93,19 @@ const Documents = () => {
                             {value}
                           </td>
                         ))}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
+                          <Button
+                            type="danger"
+                            onClick={() =>
+                              openModal({
+                                name: "delete-document",
+                                params: { id: document.id, uid },
+                              })
+                            }
+                          >
+                            Remove
+                          </Button>
+                        </td>
                       </tr>
                     ))}
                 </tbody>

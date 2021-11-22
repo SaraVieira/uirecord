@@ -19,11 +19,9 @@ export default function Dashboard() {
             </h1>
           </div>
           <div className="mt-4 flex sm:mt-0 sm:ml-4">
-          <Button
-            onClick={() => openModal({ name: "new-index" })}
-          >
-            Create a new Index
-          </Button>
+            <Button onClick={() => openModal({ name: "new-index" })}>
+              Create a new Index
+            </Button>
           </div>
         </div>
         <Stats />
@@ -31,7 +29,7 @@ export default function Dashboard() {
         <div className="mt-10 sm:hidden">
           <div className="px-4 sm:px-6">
             <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-              Projects
+              Indexes
             </h2>
           </div>
           <ul
