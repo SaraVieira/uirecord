@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import Link from "next/link";
 import { format } from "date-fns";
 import { classNames } from "../../../lib/utils/classnames";
 import { ChevronRightIcon } from "@heroicons/react/solid";

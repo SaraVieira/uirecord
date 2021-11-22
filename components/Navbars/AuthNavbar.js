@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 // components
 
-import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -46,9 +45,7 @@ export default function Navbar() {
               </li>
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="flex items-center">
-                <PagesDropdown />
-              </li>
+
               <li className="flex items-center">
                 <a
                   className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"

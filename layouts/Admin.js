@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import Link from "next/link";
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { HomeIcon, MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
