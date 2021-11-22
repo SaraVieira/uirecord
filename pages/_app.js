@@ -7,7 +7,7 @@ import { useCreateStore, Provider } from "../lib/store";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "tailwindcss/tailwind.css";
+import "../styles/index.css";
 import ModalWrapper from "../lib/modals/wrapper";
 const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {

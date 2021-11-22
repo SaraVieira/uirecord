@@ -8,7 +8,8 @@ export const useUpdateSettings = ({ uid }) => {
   const { headers, host } = useInfo();
   return useMutation(
     (toUpdateObj) => {
-      return axios.post(`${host}indexes/${uid}`, JSON.stringify(toUpdateObj), {
+      console.log(toUpdateObj);
+      return axios.post(`${host}indexes/${uid}/settings`, toUpdateObj, {
         headers,
       });
     },

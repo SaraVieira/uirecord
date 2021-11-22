@@ -11,6 +11,7 @@
     "@heroicons/react": "^1.0.5",
     "@popperjs/core": "2.10.2",
     "@tailwindcss/forms": "0.3.4",
+    "@tailwindcss/jit": "^0.1.18",
     "chart.js": "3.6.0",
     "date-fns": "^2.26.0",
     "formik": "^2.2.9",
@@ -27,12 +28,8 @@
     "build": "next build",
     "dev": "next dev",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
-    "build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css",
     "lint": "eslint . --cache --fix",
     "pretest": "npm run lint"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -45,9 +42,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "optionalDependencies": {
-    "typescript": "4.2.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",

@@ -1,33 +1,33 @@
 import { Dialog } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";
-import { DASHBOARD_ROUTE, INDEXES } from "../../lib/constants";
+import { ALL_SETTINGS } from "../../lib/constants";
 import { useInfo } from "../../lib/hooks/useInfo";
 import Button from "../Button";
 
-const useCreateIndex = () => {
+const useResetSettings = ({ onSuccess }) => {
   const queryClient = useQueryClient();
   const { headers, host } = useInfo();
-  const router = useRouter();
   return useMutation(
     ({ uid }) => {
-      return axios.delete(`${host}indexes/${uid}`, {
+      return axios.delete(`${host}indexes/${uid}/settings`, {
         headers,
       });
     },
     {
       onSuccess: async () => {
-        await queryClient.invalidateQueries(INDEXES);
-        router.push(DASHBOARD_ROUTE);
+        await queryClient.invalidateQueries(ALL_SETTINGS);
+        onSuccess();
       },
     }
   );
 };
 
 const DeleteIndex = ({ onCancel, data: { uid } }) => {
-  const { mutate: deleteIndexMutation, isLoading } = useCreateIndex();
+  const { mutate: resetSettingsMutation, isLoading } = useResetSettings({
+    onSuccess: onCancel,
+  });
 
   return (
     <div>
@@ -43,11 +43,11 @@ const DeleteIndex = ({ onCancel, data: { uid } }) => {
             as="h3"
             className="text-lg leading-6 font-medium text-gray-900"
           >
-            Delete Index
+            Reset Settings
           </Dialog.Title>
           <div className="mt-2">
             <p className="text-sm text-gray-500">
-              Are you sure you want to delete this index? All of your data will
+              Are you sure you want to reset the settings? All of your data will
               be permanently removed. This action cannot be undone.
             </p>
           </div>
@@ -56,10 +56,10 @@ const DeleteIndex = ({ onCancel, data: { uid } }) => {
       <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse gap-2">
         <Button
           type="danger"
-          onClick={() => deleteIndexMutation({ uid })}
+          onClick={() => resetSettingsMutation({ uid })}
           disabled={isLoading}
         >
-          Delete
+          Reset
         </Button>
         <Button type="secondary" onClick={onCancel} disabled={isLoading}>
           Cancel
