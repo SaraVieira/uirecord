@@ -205,7 +205,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
           </nav>
 
           <footer className="px-3 mt-6 mb-2 flex items-center justify-between">
-            <a href="https://github.com/SaraVieira/meilisearch-ui">
+            <a href="https://github.com/SaraVieira/uirecord">
               <svg
                 role="img"
                 viewBox="0 0 24 24"
