@@ -5,11 +5,13 @@ import { HomeIcon, MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
 import { classNames } from "../lib/utils/classnames";
 import { useIndexes } from "../views/Dashboard/root/hooks/useIndexes";
-import { SINGLE_INDEX } from "../lib/constants";
+import { DASHBOARD_ROUTE, SINGLE_INDEX } from "../lib/constants";
 import Button from "../components/Button";
 import { useStore } from "../lib/store";
 import { useRouter } from "next/router";
-const navigation = [{ name: "Home", href: "#", icon: HomeIcon, current: true }];
+const navigation = [
+  { name: "Home", href: DASHBOARD_ROUTE, icon: HomeIcon, current: true },
+];
 
 const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
   const { isLoading, data: indexes } = useIndexes();
@@ -85,28 +87,28 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
                 <nav className="px-2">
                   <div className="space-y-1">
                     {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
-                          "group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        <item.icon
+                      <Link href={item.href} key={item.name}>
+                        <a
                           className={classNames(
                             item.current
-                              ? "text-gray-500"
-                              : "text-gray-400 group-hover:text-gray-500",
-                            "mr-3 flex-shrink-0 h-6 w-6"
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
+                            "group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md"
                           )}
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          <item.icon
+                            className={classNames(
+                              item.current
+                                ? "text-gray-500"
+                                : "text-gray-400 group-hover:text-gray-500",
+                              "mr-3 flex-shrink-0 h-6 w-6"
+                            )}
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </a>
+                      </Link>
                     ))}
                   </div>
                   <div className="mt-8">

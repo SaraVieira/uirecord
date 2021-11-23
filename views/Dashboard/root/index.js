@@ -7,7 +7,6 @@ import { openModal } from "../../../lib/modals/wrapper";
 
 export default function Dashboard() {
   const { isLoading, data: indexes } = useIndexes();
-
   return (
     <>
       <main className="flex-1">

@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { INDEXES } from "../../lib/constants";
 import { useInfo } from "../../lib/hooks/useInfo";
@@ -19,7 +20,12 @@ const useRemoveDocument = ({ id, uid }) => {
     {
       onSuccess: async () => {
         queryClient.invalidateQueries([INDEXES, uid, "", 1]);
+        toast.success("Your document was removed successfully");
         closeModal();
+      },
+
+      onError: () => {
+        toast.error("There was a problem removing your document");
       },
     }
   );

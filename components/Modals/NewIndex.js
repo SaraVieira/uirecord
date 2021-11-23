@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import { useFormik } from "formik";
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { INDEXES } from "../../lib/constants";
 import { useInfo } from "../../lib/hooks/useInfo";
@@ -23,9 +24,13 @@ const useCreateIndex = () => {
       });
     },
     {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(INDEXES);
+      onSuccess: () => {
+        queryClient.invalidateQueries(INDEXES);
+        toast.success("Your index was created successfully");
         closeModal();
+      },
+      onError: () => {
+        toast.error("There was a problem creating your index");
       },
     }
   );

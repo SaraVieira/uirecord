@@ -1,15 +1,12 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import React from "react";
-
 import Head from "next/head";
-
 import { useCreateStore, Provider } from "../lib/store";
 import { ReactQueryDevtools } from "react-query/devtools";
-
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../styles/index.css";
-
 import ModalWrapper from "../lib/modals/wrapper";
+import { Toaster } from "react-hot-toast";
+
 const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {
   const createStore = useCreateStore(pageProps.initialZustandState);
@@ -17,7 +14,7 @@ export default function App({ Component, pageProps }) {
   const Layout = Component.layout || (({ children }) => <>{children}</>);
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <meta
           name="viewport"
@@ -29,11 +26,12 @@ export default function App({ Component, pageProps }) {
         <Provider createStore={createStore}>
           <Layout>
             <Component {...pageProps} />
+            <Toaster />
             <ModalWrapper />
             <ReactQueryDevtools initialIsOpen={true} />
           </Layout>
         </Provider>
       </QueryClientProvider>
-    </React.Fragment>
+    </>
   );
 }

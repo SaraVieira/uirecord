@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { ALL_SETTINGS } from "../../lib/constants";
 import { useInfo } from "../../lib/hooks/useInfo";
@@ -16,9 +17,13 @@ const useResetSettings = ({ onSuccess }) => {
       });
     },
     {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(ALL_SETTINGS);
+      onSuccess: () => {
+        toast.success("Your settings were reset successfully");
+        queryClient.invalidateQueries(ALL_SETTINGS);
         onSuccess();
+      },
+      onError: () => {
+        toast.error("There was a problem resetting your settings");
       },
     }
   );
