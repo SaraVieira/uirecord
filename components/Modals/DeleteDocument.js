@@ -13,7 +13,7 @@ const useRemoveDocument = ({ id, uid }) => {
   const { headers, host } = useInfo();
   return useMutation(
     () => {
-      return axios.delete(`${host}indexes/${uid}/documents/${id}`, {
+      return axios.delete(`${host}/indexes/${uid}/documents/${id}`, {
         headers,
       });
     },

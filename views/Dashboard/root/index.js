@@ -10,7 +10,6 @@ export default function Dashboard() {
   return (
     <>
       <main className="flex-1">
-        {/* Page title & actions */}
         <div className="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div className="flex-1 min-w-0">
             <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
@@ -24,7 +23,6 @@ export default function Dashboard() {
           </div>
         </div>
         <Stats />
-        {/* Projects list (only on smallest breakpoint) */}
         <div className="mt-10 sm:hidden">
           <div className="px-4 sm:px-6">
             <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
@@ -42,7 +40,6 @@ export default function Dashboard() {
           </ul>
         </div>
 
-        {/* Projects table (small breakpoint and up) */}
         <div className="hidden mt-8 sm:block">
           <div className="align-middle inline-block min-w-full border-b border-gray-200">
             <table className="min-w-full">

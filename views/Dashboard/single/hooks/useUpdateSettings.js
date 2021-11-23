@@ -8,12 +8,10 @@ export const useUpdateSettings = ({ uid, onSuccess }) => {
   const queryClient = useQueryClient();
   const { headers, host } = useInfo();
   return useMutation(
-    (toUpdateObj) => {
-      console.log(toUpdateObj);
-      return axios.post(`${host}indexes/${uid}/settings`, toUpdateObj, {
+    (toUpdateObj) =>
+      axios.post(`${host}/indexes/${uid}/settings`, toUpdateObj, {
         headers,
-      });
-    },
+      }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries([ALL_SETTINGS, uid]);

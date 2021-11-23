@@ -14,6 +14,8 @@ const Index = () => {
     query: { uid, tab },
   } = useRouter();
 
+  const showDocuments = tab === INDEX_TABS[0] || !tab;
+
   return (
     <>
       <div className="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
@@ -23,16 +25,14 @@ const Index = () => {
           </h1>
         </div>
         <div className="mt-4 flex sm:mt-0 sm:ml-4">
-          <Button
-            onClick={() => openModal({ name: "new-index" })}
-          >
+          <Button onClick={() => openModal({ name: "new-index" })}>
             Create a new Index
           </Button>
         </div>
       </div>
       <Tabs uid={uid} tab={tab} />
-      {(tab === INDEX_TABS[0] || !tab) && <Documents />}
-      {(tab === INDEX_TABS[1]) && <Settings />}
+      {showDocuments && <Documents />}
+      {tab === INDEX_TABS[1] && <Settings />}
     </>
   );
 };

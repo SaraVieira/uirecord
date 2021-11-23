@@ -12,7 +12,7 @@ const useResetSettings = ({ onSuccess }) => {
   const { headers, host } = useInfo();
   return useMutation(
     ({ uid }) => {
-      return axios.delete(`${host}indexes/${uid}/settings`, {
+      return axios.delete(`${host}/indexes/${uid}/settings`, {
         headers,
       });
     },

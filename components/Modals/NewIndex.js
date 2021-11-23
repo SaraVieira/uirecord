@@ -19,7 +19,7 @@ const useCreateIndex = () => {
             primaryKey,
           }
         : { uid };
-      return axios.post(`${host}indexes`, JSON.stringify(values), {
+      return axios.post(`${host}/indexes`, JSON.stringify(values), {
         headers,
       });
     },

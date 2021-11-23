@@ -14,7 +14,7 @@ const useDeleteIndex = () => {
   const router = useRouter();
   return useMutation(
     ({ uid }) => {
-      return axios.delete(`${host}indexes/${uid}`, {
+      return axios.delete(`${host}/indexes/${uid}`, {
         headers,
       });
     },

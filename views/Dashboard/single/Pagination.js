@@ -14,18 +14,22 @@ const Pagination = ({ availablePages, page, setPage, hits }) => {
   return (
     <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
       <div className="flex-1 flex justify-between sm:hidden">
-        <a
-          href="#"
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-        >
-          Previous
-        </a>
-        <a
-          href="#"
-          className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-        >
-          Next
-        </a>
+        {page !== 1 && (
+          <button
+            onClick={() => setPage(page - 1)}
+            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Previous
+          </button>
+        )}
+        {page !== availablePages && (
+          <button
+            onClick={() => setPage(page + 1)}
+            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Next
+          </button>
+        )}
       </div>
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
@@ -53,7 +57,6 @@ const Pagination = ({ availablePages, page, setPage, hits }) => {
                 <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             )}
-            {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
             {arrayOfPages.slice(0, 3).length &&
               arrayOfPages.slice(0, 3).map((i) => (
                 <button

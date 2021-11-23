@@ -9,7 +9,7 @@ export const useAddDocuments = ({ uid, onSuccess }) => {
   const { headers, host } = useInfo();
   return useMutation(
     (toUpdateObj) => {
-      return axios.put(`${host}indexes/${uid}/documents`, toUpdateObj, {
+      return axios.put(`${host}/indexes/${uid}/documents`, toUpdateObj, {
         headers,
       });
     },
