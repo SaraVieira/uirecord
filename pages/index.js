@@ -4,23 +4,23 @@ import Auth from "../layouts/Auth.js";
 import { useStore } from "../lib/store";
 import FeedbackMessage from "../components/FeedbackMessage";
 import { useRouter } from "next/router";
+import { DASHBOARD_ROUTE } from "../lib/constants.js";
 
 export default function Index() {
   const router = useRouter();
   const { login, error, ...rest } = useStore();
-  const enabledRememberMe = rest.host || rest.key;
+
   const [host, setHost] = useState(rest.host);
   const [key, setKey] = useState(rest.key);
-  const [remember, setRemember] = useState(enabledRememberMe);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await login(host, key, remember);
+    await login(host, key);
   };
 
   useEffect(() => {
     if (rest.host && rest.key && rest.keys) {
-      router.push("/admin/dashboard");
+      router.push(DASHBOARD_ROUTE);
     }
   }, [rest.host, rest.key, rest.keys]);
 
@@ -63,20 +63,6 @@ export default function Index() {
                       value={key}
                       onChange={(e) => setKey(e.target.value)}
                     />
-                  </div>
-                  <div>
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        id="customCheckLogin"
-                        type="checkbox"
-                        className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                        checked={remember}
-                        onChange={(e) => setRemember(e.target.checked)}
-                      />
-                      <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        Remember me
-                      </span>
-                    </label>
                   </div>
                   {error && (
                     <FeedbackMessage type="error">
