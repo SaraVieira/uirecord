@@ -79,7 +79,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
                 <img
                   className="h-[100px] m-auto block w-auto"
                   src="/logo.svg"
-                  alt="RecordUI"
+                  alt="uiRecord"
                 />
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
@@ -147,7 +147,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
           <img
             className="h-[100px] m-auto block w-auto"
             src="/logo.svg"
-            alt="RecordUI"
+            alt="uiRecord"
           />
         </div>
         {/* Sidebar component, swap this element with another sidebar if you like */}

@@ -33,7 +33,7 @@ export default function Index() {
               <img
                 className="h-[100px] m-auto block w-auto"
                 src="/logo.svg"
-                alt="RecordUI"
+                alt="uiRecord"
               />
             </div>
 
