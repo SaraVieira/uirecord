@@ -27,62 +27,86 @@ export default function Index() {
   return (
     <>
       <div className="container mx-auto px-4 h-full">
-        <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-6/12 px-4">
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form onSubmit={onSubmit} className="mt-6">
-                  <div className="relative w-full mb-3">
+        <>
+          <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+            <div className="sm:mx-auto sm:w-full sm:max-w-md">
+              <img
+                className="mx-auto h-12 w-auto"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt="Workflow"
+              />
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Sign in to your account
+              </h2>
+            </div>
+
+            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+              <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <form
+                  onSubmit={onSubmit}
+                  className="space-y-6"
+                  action="#"
+                  method="POST"
+                >
+                  <div>
                     <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="host"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Host
                     </label>
-                    <input
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Host"
-                      name="host"
-                      value={host}
-                      onChange={(e) => setHost(e.target.value)}
-                    />
+                    <div className="mt-1">
+                      <input
+                        id="host"
+                        name="host"
+                        type="text"
+                        autoComplete="host"
+                        required
+                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        value={host}
+                        onChange={(e) => setHost(e.target.value)}
+                      />
+                    </div>
                   </div>
 
-                  <div className="relative w-full mb-3">
+                  <div>
                     <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="api-key"
+                      htmlFor="masterKey"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Master API Key
                     </label>
-                    <input
-                      type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                      value={key}
-                      onChange={(e) => setKey(e.target.value)}
-                    />
+                    <div className="mt-1">
+                      <input
+                        id="masterKey"
+                        name="masterKey"
+                        type="password"
+                        required
+                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        value={key}
+                        onChange={(e) => setKey(e.target.value)}
+                      />
+                    </div>
                   </div>
                   {error && (
                     <FeedbackMessage type="error">
                       Could not communicate with host
                     </FeedbackMessage>
                   )}
-                  <div className="text-center mt-6">
+                  <div>
                     <button
-                      className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="submit"
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       disabled={!host || !key}
                     >
-                      Sign In
+                      Sign in
                     </button>
                   </div>
                 </form>
               </div>
             </div>
           </div>
-        </div>
+        </>
       </div>
     </>
   );
