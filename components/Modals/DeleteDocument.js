@@ -12,11 +12,10 @@ const useRemoveDocument = ({ id, uid }) => {
   const queryClient = useQueryClient();
   const { headers, host } = useInfo();
   return useMutation(
-    () => {
-      return axios.delete(`${host}/indexes/${uid}/documents/${id}`, {
+    () =>
+      axios.delete(`${host}/indexes/${uid}/documents/${id}`, {
         headers,
-      });
-    },
+      }),
     {
       onSuccess: async () => {
         queryClient.invalidateQueries([INDEXES, uid, "", 1]);
@@ -31,14 +30,14 @@ const useRemoveDocument = ({ id, uid }) => {
   );
 };
 
-const DeleteIndex = ({ onCancel, data: { id, uid } }) => {
+const DeleteDocument = ({ onCancel, data: { id, uid } }) => {
   const { mutate: deleteDocumentMutation, isLoading } = useRemoveDocument({
     id,
     uid,
   });
 
   return (
-    <div>
+    <>
       <div className="sm:flex sm:items-start">
         <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
           <ExclamationIcon
@@ -73,8 +72,8 @@ const DeleteIndex = ({ onCancel, data: { id, uid } }) => {
           Cancel
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 
-export default DeleteIndex;
+export default DeleteDocument;

@@ -8,7 +8,6 @@ const Ace = ({ onChange, ...props }) => {
       mode="json"
       theme="dracula"
       onChange={(values) => onChange(values)}
-      name="sup"
       {...props}
     />
   );

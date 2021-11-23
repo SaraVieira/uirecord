@@ -14,9 +14,9 @@ const Documents = () => {
   } = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useIndex({ uid, searchQuery, page });
+  const { data } = useIndex({ uid, searchQuery, page });
   const [keys, setKeys] = useState([]);
-  const documents = data?.hits;
+  const documents = data?.hits || [];
   const availablePages = useMemo(
     () => Math.ceil(data?.nbHits / PAGE_SIZE),
     [documents]
@@ -28,9 +28,10 @@ const Documents = () => {
     }
 
     if (documents && !documents.length) {
-      setKeys();
+      setKeys([]);
     }
   }, [documents]);
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 mb-5">
@@ -58,16 +59,15 @@ const Documents = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    {keys &&
-                      keys.map((key) => (
-                        <th
-                          key={key}
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          {key}
-                        </th>
-                      ))}
+                    {keys.map((key) => (
+                      <th
+                        key={key}
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        {key}
+                      </th>
+                    ))}
                     <th
                       scope="col"
                       className="sr-only px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -77,37 +77,36 @@ const Documents = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {!isLoading &&
-                    documents.map((document, documentIdx) => (
-                      <tr
-                        key={document.uid}
-                        className={
-                          documentIdx % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        }
-                      >
-                        {Object.values(document).map((value) => (
-                          <td
-                            key={value}
-                            className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500"
-                          >
-                            {value}
-                          </td>
-                        ))}
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
-                          <Button
-                            type="danger"
-                            onClick={() =>
-                              openModal({
-                                name: "delete-document",
-                                params: { id: document.id, uid },
-                              })
-                            }
-                          >
-                            Remove
-                          </Button>
+                  {documents.map((document, documentIdx) => (
+                    <tr
+                      key={document.uid}
+                      className={
+                        documentIdx % 2 === 0 ? "bg-white" : "bg-gray-50"
+                      }
+                    >
+                      {Object.values(document).map((value) => (
+                        <td
+                          key={value}
+                          className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500"
+                        >
+                          {value}
                         </td>
-                      </tr>
-                    ))}
+                      ))}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
+                        <Button
+                          type="danger"
+                          onClick={() =>
+                            openModal({
+                              name: "delete-document",
+                              params: { id: document.id, uid },
+                            })
+                          }
+                        >
+                          Remove
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
 

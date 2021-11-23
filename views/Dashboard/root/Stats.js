@@ -4,7 +4,7 @@ import { formatBytes } from "../../../lib/utils/formatBytes";
 import { useStats } from "./hooks/useStats";
 
 const Stats = () => {
-  const { isLoading, data } = useStats();
+  const { isLoading, data = {} } = useStats();
   const stats = useMemo(
     () => [
       {
@@ -13,11 +13,12 @@ const Stats = () => {
       },
       {
         label: "Indexes",
-        value: Object.keys(data.indexes).length,
+        value: Object.keys(data.indexes || {}).length,
       },
       {
         label: "Last Update",
-        value: format(new Date(data.lastUpdate), "MM/dd/yyyy"),
+        value:
+          data.lastUpdate && format(new Date(data.lastUpdate), "MM/dd/yyyy"),
       },
     ],
     [data]

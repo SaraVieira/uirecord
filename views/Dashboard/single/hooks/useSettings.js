@@ -5,7 +5,7 @@ import { ALL_SETTINGS } from "../../../../lib/constants";
 
 export const useSettings = ({ uid }) => {
   const { headers, host } = useInfo();
-  const getIndex = async () => {
+  const getSettings = async () => {
     const { data } = await axios.get(`${host}/indexes/${uid}/settings`, {
       headers: headers,
     });
@@ -19,5 +19,5 @@ export const useSettings = ({ uid }) => {
     }, []);
   };
 
-  return useQuery([ALL_SETTINGS, uid], getIndex);
+  return useQuery([ALL_SETTINGS, uid], getSettings);
 };

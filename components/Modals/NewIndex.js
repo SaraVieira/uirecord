@@ -51,7 +51,7 @@ const NewIndex = ({ onCancel }) => {
   });
 
   return (
-    <div>
+    <>
       <div>
         <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
           <QuestionMarkCircleIcon
@@ -126,7 +126,7 @@ const NewIndex = ({ onCancel }) => {
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 

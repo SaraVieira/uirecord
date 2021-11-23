@@ -6,8 +6,8 @@ import { INDEXES } from "../../../../lib/constants";
 
 export const useIndex = ({ uid, searchQuery = "", page = 1 }) => {
   const { headers, host } = useInfo();
+  const offset = (page - 1) * PAGE_SIZE;
   const getIndex = async () => {
-    const offset = (page - 1) * PAGE_SIZE;
     const { data } = await axios.get(
       `${host}/indexes/${uid}/search?q=${searchQuery}&offset=${offset}`,
       {
