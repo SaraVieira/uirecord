@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }) {
             <Component {...pageProps} />
             <Toaster />
             <ModalWrapper />
-            <ReactQueryDevtools initialIsOpen={true} />
+            <ReactQueryDevtools initialIsOpen={false} />
           </Layout>
         </Provider>
       </QueryClientProvider>
