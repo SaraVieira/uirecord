@@ -1,8 +1,9 @@
 import { useRouter } from "next/dist/client/router";
+import { useEffect } from "react";
 import Button from "../../../components/Button";
 
 import Admin from "../../../layouts/Admin";
-import { INDEX_TABS } from "../../../lib/constants";
+import { INDEX_TABS, SINGLE_INDEX } from "../../../lib/constants";
 import { openModal } from "../../../lib/modals/wrapper";
 import Documents from "./Documents";
 import Settings from "./Settings";
@@ -12,8 +13,17 @@ import Tabs from "./Tabs";
 const Index = () => {
   const {
     query: { uid, tab },
+    push,
   } = useRouter();
-  const showDocuments = tab === INDEX_TABS[0] || !tab;
+  const showDocuments = tab === INDEX_TABS[0];
+
+  useEffect(() => {
+    if (!tab && uid) {
+      push(`${SINGLE_INDEX(uid)}?tab=${INDEX_TABS[0]}`, undefined, {
+        shallow: true,
+      });
+    }
+  }, [tab, uid]);
 
   return (
     <>

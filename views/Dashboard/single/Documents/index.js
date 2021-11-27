@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import Button from "../../../../components/Button";
 import { Input } from "../../../../components/Input";
+import Loader from "../../../../components/Loader";
 import { openModal } from "../../../../lib/modals/wrapper";
 import { PAGE_SIZE } from "../constants";
 import { useIndex } from "../hooks/useIndex";
@@ -16,7 +17,12 @@ const Documents = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [selectedSort, setSelectedSort] = useState();
-  const { data } = useIndex({ uid, searchQuery, page, selectedSort });
+  const { data, isLoading } = useIndex({
+    uid,
+    searchQuery,
+    page,
+    selectedSort,
+  });
   const [keys, setKeys] = useState([]);
 
   const { data: sortable } = useSortableAttributes({ uid });
@@ -83,7 +89,8 @@ const Documents = () => {
         </Button>
       </div>
       <div className="flex flex-col w-full">
-        {documents && !documents.length && <Empty />}
+        {isLoading && <Loader />}
+        {!isLoading && documents && !documents.length && <Empty />}
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
