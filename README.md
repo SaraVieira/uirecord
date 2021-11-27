@@ -23,6 +23,13 @@
 - ☁️ Use hosted version or deploy your own
 - 🔒 No data is stored outside your browser
 
+## Using your data
+
+* Login using your [master key](https://docs.meilisearch.com/reference/api/keys.html#keys). From this moment on only your private key will be used to make API calls.
+* The URL of your [meilisearch](https://www.meilisearch.com/) instance
+
+
+
 ## Run Locally:
 
 ```sh
