@@ -32,6 +32,8 @@ const Documents = () => {
     }
   }, [documents]);
 
+  console.log(keys);
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 mb-5">
@@ -89,7 +91,9 @@ const Documents = () => {
                           key={value}
                           className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500"
                         >
-                          {value}
+                          {typeof value === "object"
+                            ? JSON.stringify(value)
+                            : value}
                         </td>
                       ))}
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
