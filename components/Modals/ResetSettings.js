@@ -1,36 +1,29 @@
 import { Dialog } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { ALL_SETTINGS } from "../../lib/constants";
-import { useInfo } from "../../lib/hooks/useInfo";
+import { useClient } from "../../lib/hooks/useClient";
 import Button from "../Button";
 
-const useResetSettings = ({ onSuccess }) => {
+const useResetSettings = ({ onSuccess, uid }) => {
   const queryClient = useQueryClient();
-  const { headers, host } = useInfo();
-  return useMutation(
-    ({ uid }) => {
-      return axios.delete(`${host}/indexes/${uid}/settings`, {
-        headers,
-      });
+  const client = useClient({ uid });
+  return useMutation(() => client.resetSettings(), {
+    onSuccess: () => {
+      toast.success("Your settings were reset successfully");
+      queryClient.invalidateQueries(ALL_SETTINGS);
+      onSuccess();
     },
-    {
-      onSuccess: () => {
-        toast.success("Your settings were reset successfully");
-        queryClient.invalidateQueries(ALL_SETTINGS);
-        onSuccess();
-      },
-      onError: () => {
-        toast.error("There was a problem resetting your settings");
-      },
-    }
-  );
+    onError: () => {
+      toast.error("There was a problem resetting your settings");
+    },
+  });
 };
 
 const ResetSettings = ({ onCancel, data: { uid } }) => {
   const { mutate: resetSettingsMutation, isLoading } = useResetSettings({
+    uid,
     onSuccess: onCancel,
   });
 

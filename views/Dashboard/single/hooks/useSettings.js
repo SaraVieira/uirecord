@@ -1,14 +1,14 @@
 import { useQuery } from "react-query";
-import axios from "axios";
-import { useInfo } from "../../../../lib/hooks/useInfo";
+
+import { useClient } from "../../../../lib/hooks/useClient";
 import { ALL_SETTINGS } from "../../../../lib/constants";
 
 export const useSettings = ({ uid }) => {
-  const { headers, host } = useInfo();
-  const getSettings = async () => {
-    const { data } = await axios.get(`${host}/indexes/${uid}/settings`, {
-      headers: headers,
-    });
+  const client = useClient({ uid });
+
+  return useQuery([ALL_SETTINGS, uid], async () => {
+    const data = await client.getSettings();
+
     return Object.keys(data).reduce((acc, curr) => {
       acc.push({
         key: curr,
@@ -17,7 +17,5 @@ export const useSettings = ({ uid }) => {
 
       return acc;
     }, []);
-  };
-
-  return useQuery([ALL_SETTINGS, uid], getSettings);
+  });
 };

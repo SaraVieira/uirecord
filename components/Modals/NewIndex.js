@@ -1,27 +1,23 @@
 import { Dialog } from "@headlessui/react";
 import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { INDEXES } from "../../lib/constants";
-import { useInfo } from "../../lib/hooks/useInfo";
+import { useClient } from "../../lib/hooks/useClient";
 import { closeModal } from "../../lib/modals/wrapper";
 
 const useCreateIndex = () => {
   const queryClient = useQueryClient();
-  const { headers, host } = useInfo();
+  const client = useClient();
   return useMutation(
     ({ uid, primaryKey }) => {
       const values = primaryKey
         ? {
-            uid,
             primaryKey,
           }
-        : { uid };
-      return axios.post(`${host}/indexes`, JSON.stringify(values), {
-        headers,
-      });
+        : {};
+      return client.createIndex(uid, values);
     },
     {
       onSuccess: () => {

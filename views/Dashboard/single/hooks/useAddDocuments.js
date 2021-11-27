@@ -1,21 +1,20 @@
 import { INDEXES } from "../../../../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
-import { useInfo } from "../../../../lib/hooks/useInfo";
-import axios from "axios";
+import { useClient } from "../../../../lib/hooks/useClient";
 import toast from "react-hot-toast";
 
 export const useAddDocuments = ({ uid, onSuccess }) => {
   const queryClient = useQueryClient();
-  const { headers, host } = useInfo();
+  const client = useClient({ uid });
   return useMutation(
     (toUpdateObj) => {
-      return axios.put(`${host}/indexes/${uid}/documents`, toUpdateObj, {
-        headers,
-      });
+      const parsed = JSON.parse(toUpdateObj);
+      const toSend = Array.isArray(parsed) ? parsed : [parsed];
+      return client.updateDocuments(toSend);
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([INDEXES, uid, "", 1]);
+        queryClient.invalidateQueries([INDEXES, uid]);
         toast.success("Your records were inserted successfully");
         onSuccess();
       },

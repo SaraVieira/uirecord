@@ -1,33 +1,26 @@
 import { Dialog } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { INDEXES } from "../../lib/constants";
-import { useInfo } from "../../lib/hooks/useInfo";
+import { useClient } from "../../lib/hooks/useClient";
 import { closeModal } from "../../lib/modals/wrapper";
 import Button from "../Button";
 
 const useRemoveDocument = ({ id, uid }) => {
   const queryClient = useQueryClient();
-  const { headers, host } = useInfo();
-  return useMutation(
-    () =>
-      axios.delete(`${host}/indexes/${uid}/documents/${id}`, {
-        headers,
-      }),
-    {
-      onSuccess: async () => {
-        queryClient.invalidateQueries([INDEXES, uid, "", 1]);
-        toast.success("Your document was removed successfully");
-        closeModal();
-      },
+  const client = useClient({ uid });
+  return useMutation(() => client.deleteDocument(id), {
+    onSuccess: async () => {
+      queryClient.invalidateQueries([INDEXES, uid, "", 1]);
+      toast.success("Your document was removed successfully");
+      closeModal();
+    },
 
-      onError: () => {
-        toast.error("There was a problem removing your document");
-      },
-    }
-  );
+    onError: () => {
+      toast.error("There was a problem removing your document");
+    },
+  });
 };
 
 const DeleteDocument = ({ onCancel, data: { id, uid } }) => {

@@ -13,7 +13,6 @@ const Index = () => {
   const {
     query: { uid, tab },
   } = useRouter();
-
   const showDocuments = tab === INDEX_TABS[0] || !tab;
 
   return (
@@ -30,9 +29,14 @@ const Index = () => {
           </Button>
         </div>
       </div>
-      <Tabs uid={uid} tab={tab} />
-      {showDocuments && <Documents />}
-      {tab === INDEX_TABS[1] && <Settings />}
+      {tab && (
+        <>
+          {" "}
+          <Tabs uid={uid} tab={tab} />
+          {showDocuments && <Documents />}
+          {tab === INDEX_TABS[1] && <Settings />}
+        </>
+      )}
     </>
   );
 };

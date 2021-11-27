@@ -1,17 +1,12 @@
 import { useQuery } from "react-query";
-import axios from "axios";
 import { INDEXES } from "../../../../lib/constants";
-import { useInfo } from "../../../../lib/hooks/useInfo";
+import { useClient } from "../../../../lib/hooks/useClient";
 
 export const useIndexes = () => {
-  const { host, headers } = useInfo();
+  const client = useClient();
 
-  const getIndexes = async () => {
-    const { data } = await axios.get(`${host}/indexes`, {
-      headers,
-    });
-    return data;
-  };
-
-  return useQuery(INDEXES, getIndexes);
+  return useQuery(INDEXES, async () => {
+    const indexes = await client.getIndexes();
+    return indexes;
+  });
 };

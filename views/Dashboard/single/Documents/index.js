@@ -5,6 +5,7 @@ import { Input } from "../../../../components/Input";
 import { openModal } from "../../../../lib/modals/wrapper";
 import { PAGE_SIZE } from "../constants";
 import { useIndex } from "../hooks/useIndex";
+import { useSortableAttributes } from "../hooks/useSortableAttributes";
 import Pagination from "../Pagination";
 import Empty from "./Empty";
 
@@ -14,8 +15,11 @@ const Documents = () => {
   } = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
-  const { data } = useIndex({ uid, searchQuery, page });
+  const [selectedSort, setSelectedSort] = useState();
+  const { data } = useIndex({ uid, searchQuery, page, selectedSort });
   const [keys, setKeys] = useState([]);
+
+  const { data: sortable } = useSortableAttributes({ uid });
   const documents = data?.hits || [];
   const availablePages = useMemo(
     () => Math.ceil(data?.nbHits / PAGE_SIZE),
@@ -32,12 +36,10 @@ const Documents = () => {
     }
   }, [documents]);
 
-  console.log(keys);
-
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 mb-5">
-        <div style={{ width: 400 }}>
+        <div style={{ width: 400 }} className="flex gap-4">
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -48,7 +50,34 @@ const Documents = () => {
             id="search"
             label="search"
           />
+          <div style={{ width: 200 }}>
+            {sortable && sortable.length ? (
+              <>
+                <label
+                  htmlFor="sort"
+                  className="block text-sm font-medium text-gray-700 sr-only"
+                >
+                  Sort By
+                </label>
+                <select
+                  id="sort"
+                  name="sort"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                  value={selectedSort}
+                  onChange={(e) => setSelectedSort(e.target.value)}
+                >
+                  <option value="">Sort By</option>
+                  {sortable?.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : null}
+          </div>
         </div>
+
         <Button onClick={() => openModal({ name: "add-records" })}>
           Add Documents
         </Button>

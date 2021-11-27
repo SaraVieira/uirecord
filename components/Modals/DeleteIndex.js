@@ -1,34 +1,26 @@
 import { Dialog } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import { DASHBOARD_ROUTE, INDEXES } from "../../lib/constants";
-import { useInfo } from "../../lib/hooks/useInfo";
+import { useClient } from "../../lib/hooks/useClient";
 import Button from "../Button";
 
 const useDeleteIndex = () => {
   const queryClient = useQueryClient();
-  const { headers, host } = useInfo();
+  const client = useClient();
   const router = useRouter();
-  return useMutation(
-    ({ uid }) => {
-      return axios.delete(`${host}/indexes/${uid}`, {
-        headers,
-      });
+  return useMutation(({ uid }) => client.deleteIndex(uid), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(INDEXES);
+      toast.success("Your index was deleted successfully");
+      router.push(DASHBOARD_ROUTE);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(INDEXES);
-        toast.success("Your index was deleted successfully");
-        router.push(DASHBOARD_ROUTE);
-      },
-      onError: () => {
-        toast.error("There was a problem deleting your index");
-      },
-    }
-  );
+    onError: () => {
+      toast.error("There was a problem deleting your index");
+    },
+  });
 };
 
 const DeleteIndex = ({ onCancel, data: { uid } }) => {

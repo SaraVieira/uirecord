@@ -1,21 +1,20 @@
 import { useQuery } from "react-query";
-import axios from "axios";
 import { PAGE_SIZE } from "../constants";
-import { useInfo } from "../../../../lib/hooks/useInfo";
+import { useClient } from "../../../../lib/hooks/useClient";
 import { INDEXES } from "../../../../lib/constants";
 
-export const useIndex = ({ uid, searchQuery = "", page = 1 }) => {
-  const { headers, host } = useInfo();
+export const useIndex = ({ uid, searchQuery = "", page = 1, selectedSort }) => {
+  const client = useClient({ uid });
   const offset = (page - 1) * PAGE_SIZE;
-  const getIndex = async () => {
-    const { data } = await axios.get(
-      `${host}/indexes/${uid}/search?q=${searchQuery}&offset=${offset}`,
-      {
-        headers,
-      }
-    );
-    return data;
-  };
 
-  return useQuery([INDEXES, uid, searchQuery, page], getIndex);
+  return useQuery([INDEXES, uid, searchQuery, page, selectedSort], async () => {
+    const props = selectedSort
+      ? {
+          sort: [selectedSort],
+          offset,
+        }
+      : { offset };
+    const data = client.search(searchQuery, props);
+    return data;
+  });
 };

@@ -1,17 +1,12 @@
 import { useQuery } from "react-query";
-import axios from "axios";
-import { useInfo } from "../../../../lib/hooks/useInfo";
+import { useClient } from "../../../../lib/hooks/useClient";
 import { STATS } from "../../../../lib/constants";
 
 export const useStats = () => {
-  const { host, headers } = useInfo();
+  const client = useClient();
 
-  const getStats = async () => {
-    const { data } = await axios.get(`${host}/stats`, {
-      headers,
-    });
-    return data;
-  };
-
-  return useQuery(STATS, getStats);
+  return useQuery(STATS, async () => {
+    const stats = await client.getStats();
+    return stats;
+  });
 };
