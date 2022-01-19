@@ -25,8 +25,8 @@ const useCreateIndex = () => {
         toast.success("Your index was created successfully");
         closeModal();
       },
-      onError: () => {
-        toast.error("There was a problem creating your index");
+      onError: (err) => {
+        toast.error("There was a problem creating your index ("+err+")");
       },
     }
   );
