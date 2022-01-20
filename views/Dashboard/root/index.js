@@ -33,7 +33,7 @@ export default function Dashboard() {
             role="list"
             className="mt-3 border-t border-gray-200 divide-y divide-gray-100"
           >
-            {!isLoading &&
+            {typeof(indexes) !== 'undefined' && !isLoading &&
               indexes.map((index) => (
                 <IndexElMobile key={index.uid} index={index} />
               ))}
@@ -55,7 +55,7 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-100">
-                {!isLoading &&
+                {typeof(indexes) !== 'undefined' && !isLoading &&
                   indexes.map((index) => (
                     <IndexElDesktop index={index} key={index.uid} />
                   ))}
