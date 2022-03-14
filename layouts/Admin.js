@@ -86,7 +86,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
                 <nav className="px-2">
                   <div className="space-y-1">
                     {navigation.map((item) => (
-                      <Link href={item.href} key={item.name}>
+                      <Link href={item.href} key={item.uid}>
                         <a
                           className={classNames(
                             item.current
@@ -105,7 +105,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
                             )}
                             aria-hidden="true"
                           />
-                          {item.name}
+                          {item.uid}
                         </a>
                       </Link>
                     ))}
@@ -122,11 +122,12 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
                       role="group"
                       aria-labelledby="mobile-indexes-headline"
                     >
-                      {typeof(indexes) !== 'undefined' && !isLoading &&
+                      {typeof indexes !== "undefined" &&
+                        !isLoading &&
                         indexes.map((index) => (
                           <Link href={SINGLE_INDEX(index.uid)} key={index.uid}>
                             <a className="group flex items-center px-3 py-2 text-base leading-5 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                              <span className="truncate">{index.name}</span>
+                              <span className="truncate">{index.uid}</span>
                             </a>
                           </Link>
                         ))}
@@ -157,7 +158,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
             <div className="space-y-1">
               {navigation.map((item) => (
                 <a
-                  key={item.name}
+                  key={item.uid}
                   href={item.href}
                   className={classNames(
                     item.current
@@ -193,11 +194,12 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
                 role="group"
                 aria-labelledby="desktop-indexes-headline"
               >
-                {typeof(indexes) !== 'undefined' && !isLoading &&
+                {typeof indexes !== "undefined" &&
+                  !isLoading &&
                   indexes.map((index) => (
                     <Link href={SINGLE_INDEX(index.uid)} key={index.uid}>
                       <a className="group flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                        <span className="truncate">{index.name}</span>
+                        <span className="truncate">{index.uid}</span>
                       </a>
                     </Link>
                   ))}

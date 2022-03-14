@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { format } from "date-fns";
 import { classNames } from "../../../lib/utils/classnames";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import { SINGLE_INDEX } from "../../../lib/constants";
@@ -17,15 +16,12 @@ export const IndexElDesktop = ({ index }) => (
         />
         <Link href={SINGLE_INDEX(index.uid)}>
           <a className="truncate hover:text-gray-600">
-            <span>{index.name} </span>
+            <span>{index.uid} </span>
           </a>
         </Link>
       </div>
     </td>
 
-    <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-      {format(new Date(index.updatedAt), "MM/dd/yyyy")}
-    </td>
     <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
       <a href="#" className="text-indigo-600 hover:text-indigo-900">
         Edit
@@ -40,7 +36,7 @@ export const IndexElMobile = ({ index }) => (
       <a className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6">
         <span className="flex items-center truncate space-x-3">
           <span className="font-medium truncate text-sm leading-6">
-            {index.name}
+            {index.uid}
           </span>
         </span>
         <ChevronRightIcon
